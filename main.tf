@@ -27,6 +27,30 @@ resource "aws_instance" "app_server" {
   key_name  = "clave-lucatic"
 
   tags = {
-    Name = "Hello_terraform"
+    Name = var.instance_name
   }
+  connection {
+    type        = "ssh"
+    host        = self.public_ip
+    user        = "ec2-user"
+    private_key = file("/home/sinensia/.ssh/clave-lucatic.pem")
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo yum install -y httpd",
+      "sudo systemctl start httpd",
+      "sudo systemctl enable httpd",
+      "sudo chown -R ec2-user /var/www/html",
+    ]
+  }
+  provisioner "file" {
+    source      = "../hello-2048/public_html/"
+    destination = "/var/www/html"
+  }
+
 }
+
+
+
+
