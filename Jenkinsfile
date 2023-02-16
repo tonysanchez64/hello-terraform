@@ -6,8 +6,6 @@ pipeline {
               withAWS(credentials: 'credenciales-aws', region: 'eu-west-1') {
                         sh 'terraform apply -auto-approve'
               }
-            
-            }
         }
     }
 }
