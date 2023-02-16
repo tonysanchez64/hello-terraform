@@ -4,11 +4,11 @@ pipeline {
     stages {
         stage('terraform') {
               steps{
-                 withCredentials([sshUserPrivateKey(credentialsId: 'ssh-amazon', keyFileVariable: '')]) {
-                     withAWS(credentials: 'credenciales-aws', region: 'eu-west-1') {
+                 withAWS(credentials: 'credenciales-aws', region: 'eu-west-1') {
+                    sshagent(['ssh-amazon']) {
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
-                     }    
+                    }    
                  }
               }
         }
