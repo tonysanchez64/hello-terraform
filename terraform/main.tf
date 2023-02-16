@@ -32,7 +32,7 @@ resource "aws_instance" "app_server" {
   }
 
   provisioner "local-exec" {
-    working_dir = "./ansible"
+    working_dir = "../ansible"
     command = "ansible-playbook -i aws_ec2.yml ec2.yml"
   }
 
