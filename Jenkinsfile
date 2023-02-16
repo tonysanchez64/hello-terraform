@@ -3,8 +3,11 @@ pipeline {
 
     stages {
         stage('terraform') {
-              withAWS(credentials: 'credenciales-aws', region: 'eu-west-1') {
+              steps{
+                   withAWS(credentials: 'credenciales-aws', region: 'eu-west-1') {
+                        sh 'terraform init'
                         sh 'terraform apply -auto-approve'
+                   }
               }
         }
     }
